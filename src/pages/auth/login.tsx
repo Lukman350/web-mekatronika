@@ -106,18 +106,21 @@ const Login = () => {
                   )}
                 </div>
                 <div className="flex flex-col items-center w-full mt-4 gap-2">
-                  <button className="btn-primary w-full" type="submit">
+                  <button
+                    className="btn-primary w-full dark:btn-secondary"
+                    type="submit"
+                  >
                     Login
                   </button>
                   <Link href="/">
-                    <a className="btn-secondary w-full text-center">
+                    <a className="btn-secondary w-full text-center dark:btn-primary">
                       Back to Home
                     </a>
                   </Link>
                 </div>
               </form>
               <Link href="/auth/register">
-                <a className="block my-2 text-right text-gray-700 text-sm hover:underline">
+                <a className="block my-2 text-right text-gray-700 dark:text-secondary-dark text-sm hover:underline">
                   Tidak mempunyai akun? Register disini
                 </a>
               </Link>

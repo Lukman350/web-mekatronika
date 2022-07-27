@@ -71,6 +71,7 @@ const Navbar: NextPage = () => {
           <button
             className="flex items-center px-3 py-2 border rounded text-primary border-primary hover:text-primary hover:border-primary"
             onClick={toggleNavigation}
+            type="button"
           >
             <svg className="fill-current h-3 w-3" viewBox="0 0 20 20">
               <title>Menu</title>

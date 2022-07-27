@@ -3,6 +3,14 @@ import { useRef, useEffect } from "react";
 import NavLink from "@/components/NavLink";
 import Link from "next/link";
 
+const NavigationList: Array<{
+  title: string;
+  href: string;
+}> = [
+  { title: "About", href: "/about" },
+  { title: "Contact", href: "/contact" },
+];
+
 const Navbar: NextPage = () => {
   const navigation = useRef<HTMLDivElement>(null);
   const header = useRef<HTMLDivElement>(null);
@@ -48,7 +56,7 @@ const Navbar: NextPage = () => {
   return (
     <header>
       <nav
-        className="container flex items-center justify-between flex-wrap p-4 transition-all ease-in-out duration-300 relative bg-gradient-to-tr from-body-bg-light dark:bg-none dark:bg-body-bg-dark dark:lg:bg-none dark:lg:bg-transparent lg:bg-none"
+        className="container flex items-center justify-between flex-wrap p-4 transition-all ease-in-out duration-300 relative bg-none dark:bg-none dark:bg-body-bg-dark dark:lg:bg-none dark:lg:bg-transparent lg:bg-none"
         ref={header}
       >
         <div className="flex items-center flex-shrink-0 text-primary mr-6 lg:mr-12">
@@ -71,27 +79,23 @@ const Navbar: NextPage = () => {
           </button>
         </div>
         <div
-          className="navbar-nav w-full block flex-grow absolute top-[68px] right-0 left-0 px-4 transition-transform ease-in-out duration-300 overflow-hidden h-max z-50 lg:flex lg:items-center lg:w-auto lg:static lg:px-0 bg-gradient-to-tr from-body-bg-light dark:bg-none dark:bg-body-bg-dark dark:lg:bg-none dark:lg:bg-transparent lg:bg-none lg:bg-transparent border-b border-[rgba(0,0,0,0.1)] lg:border-0 transform -translate-x-full md:transform-none lg:transform-none"
+          className="navbar-nav w-full block flex-grow absolute top-[68px] right-0 left-0 px-4 transition-transform ease-in-out duration-300 overflow-hidden h-max z-50 lg:flex lg:items-center lg:w-auto lg:static lg:px-0 bg-gradient-to-b from-body-bg-light dark:bg-none dark:bg-body-bg-dark dark:lg:bg-none dark:lg:bg-transparent lg:bg-none lg:bg-transparent border-b border-[rgba(0,0,0,0.1)] lg:border-0 transform -translate-x-full md:transform-none lg:transform-none"
           ref={navigation}
         >
           <div className="text-md lg:flex-grow">
-            <NavLink activeClassName="link-active" href="/">
-              <a className="block w-full lg:w-auto py-1 mt-2 lg:inline-block lg:mt-0 text-secondary hover:font-semibold lg:mr-7 dark:text-secondary-dark mr-4">
-                Home
-              </a>
-            </NavLink>
-            <NavLink activeClassName="link-active" href="/about">
-              <a className="block w-full lg:w-auto py-1 mt-2 lg:inline-block lg:mt-0 text-secondary hover:font-semibold lg:mr-7 dark:text-secondary-dark mr-4">
-                About
-              </a>
-            </NavLink>
-            <NavLink activeClassName="link-active" href="/contact">
-              <a className="block w-full lg:w-auto py-1 mt-2 lg:inline-block lg:mt-0 text-secondary hover:font-semibold lg:mr-7 dark:text-secondary-dark mr-4">
-                Contact
-              </a>
-            </NavLink>
+            {NavigationList.map(({ title, href }, idx) => (
+              <NavLink activeClassName="link-active" href={href} key={idx}>
+                <a className="block w-full lg:w-auto py-1 mt-2 lg:inline-block lg:mt-0 text-secondary hover:font-semibold lg:mr-7 dark:text-secondary-dark mr-4">
+                  {title}
+                </a>
+              </NavLink>
+            ))}
           </div>
-          <div className="mt-7 border-t border-[rgba(0,0,0,.1)] md:mt-0 lg:mt-0 md:border-0 lg:border-0">
+          <div className="mt-7 border-t border-[rgba(0,0,0,.1)] md:mt-0 lg:mt-0 md:border-0 lg:border-0 flex gap-4 flex-row items-center my-2">
+            <Link href="/auth/login">
+              <a className="btn-primary w-max md:mt-0 lg:mt-0">Login</a>
+            </Link>
+
             <div className="py-2 flex items-center before:content-['Light'] before:mr-[10px] before:text-secondary before:dark:text-secondary-dark before:text-md after:content-['Dark'] after:ml-[10px] after:text-secondary after:dark:text-secondary-dark after:text-md">
               <label className="relative inline-block w-[60px] h-[34px]">
                 <input

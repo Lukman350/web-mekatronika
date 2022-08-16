@@ -1,6 +1,5 @@
 import type { NextPage } from "next";
 import Layout from "@/components/Layout";
-import Image from "next/image";
 import Cookies from "js-cookie";
 import { useEffect } from "react";
 import jwt from "jsonwebtoken";
@@ -15,9 +14,10 @@ const Home: NextPage = () => {
   const { name } = useSelector((state: any) => state.user);
 
   useEffect(() => {
-    if (Cookies.get("refreshToken")) {
-      const token = Cookies.get("refreshToken");
-      const decoded = jwt.decode(token!);
+    const token = Cookies.get("refreshToken");
+
+    if (token) {
+      const decoded = jwt.decode(atob(token!));
       if (decoded) {
         dispatch(setUser(decoded));
       }
@@ -42,13 +42,13 @@ const Home: NextPage = () => {
   return (
     <Layout title="Teknik Mekatronika - SMKN 69 Jakarta">
       <div className="h-64 lg:h-[500px]">
-        <Carousel>
+        <Carousel slideInterval={5000}>
           <div className="flex h-full items-center justify-center bg-[url('/Banner/1.jpg')] bg-center bg-no-repeat bg-cover rounded-none text-white flex-col">
-            <h1 className="text-3xl lg:text-5xl font-black">
-              Selamat Datang di
+            <h1 className="text-2xl lg:text-5xl font-black">
+              Selamat Datang {name && <strong>- {name}</strong>}
             </h1>
             <h3 className="text-xl lg:text-2xl font-medium">
-              Website Teknik Mekatronika
+              di Website Teknik Mekatronika
             </h3>
           </div>
           <div className="flex h-full items-center justify-center bg-[url('/Banner/2.jpg')] bg-center bg-no-repeat bg-cover rounded-none text-white">

@@ -6,7 +6,6 @@ const userSlice = createSlice({
     name: "",
     nis: 0,
     username: "",
-    password: "",
     email: "",
     role: "",
   },
@@ -15,7 +14,6 @@ const userSlice = createSlice({
       state.name = action.payload.name;
       state.nis = action.payload.nis;
       state.username = action.payload.username;
-      state.password = action.payload.password;
       state.email = action.payload.email;
       state.role = action.payload.role;
     },

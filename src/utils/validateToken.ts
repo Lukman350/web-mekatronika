@@ -8,7 +8,7 @@ const validateToken = () => {
     if (!token) return false;
 
     const decoded = jwt.verify(
-      token,
+      atob(token),
       "aksdiqaskldnakjsbiqu123811231p2kmbasasdn"
     );
 

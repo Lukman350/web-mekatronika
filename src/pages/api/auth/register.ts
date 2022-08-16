@@ -15,14 +15,13 @@ export default async function handler(
       message: "Method not allowed",
     });
 
-  const { username, email, nis, password } = req.body as {
+  const { username, email, nis } = req.body as {
     username: string;
     email: string;
     nis: number;
-    password: string;
   };
 
-  if (!nis || !password || !username || !email)
+  if (!nis || !username || !email)
     return res.status(400).json({
       success: false,
       message: "Missing required fields",
@@ -46,15 +45,24 @@ export default async function handler(
     return;
   }
 
-  const salt = await bcrypt.genSalt();
-  const hashPassword = await bcrypt.hash(password, salt);
+  const generateVerifyCode = () => {
+    const chars =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    let code = "";
+    for (let i = 0; i < 32; i++) {
+      code += chars[Math.floor(Math.random() * chars.length)];
+    }
+
+    return code;
+  };
 
   const user = await User.create({
     username: username,
     email: email,
     nis: nis,
-    password: hashPassword,
     role: "User",
+    verified: false,
+    verifyCode: generateVerifyCode(),
     createdAt: new Date().getTime(),
     updatedAt: new Date().getTime(),
   });
@@ -73,6 +81,7 @@ export default async function handler(
 
   res.status(200).json({
     success: true,
-    message: "Selamat Akun Anda berhasil dibuat",
+    message:
+      "Selamat Akun Anda berhasil dibuat, silahkan cek Email Anda untuk verifikasi akun",
   });
 }

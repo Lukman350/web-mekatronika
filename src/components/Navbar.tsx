@@ -1,10 +1,13 @@
 import type { NextPage } from "next";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import NavLink from "@/components/NavLink";
 import Link from "next/link";
 import validateToken from "@/utils/validateToken";
-import { Button } from "flowbite-react";
+import { Button, Dropdown } from "flowbite-react";
+import { useSelector } from "react-redux";
+import Cookies from "js-cookie";
+import { MdWbSunny, MdOutlineBedtime } from "react-icons/md";
 
 const NavigationList: Array<{
   title: string;
@@ -17,8 +20,10 @@ const NavigationList: Array<{
 const Navbar: NextPage = () => {
   const navigation = useRef<HTMLDivElement>(null);
   const header = useRef<HTMLDivElement>(null);
-  const themeSwitch = useRef<HTMLInputElement>(null);
   const router = useRouter();
+  const [theme, setTheme] = useState<string>("light");
+
+  const { name } = useSelector((state: any) => state.user);
 
   const toggleNavigation = () => navigation.current?.classList.toggle("active");
 
@@ -27,13 +32,17 @@ const Navbar: NextPage = () => {
     else header.current?.classList.remove("sticky");
   };
 
-  const switchTheme = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.checked) {
-      document.documentElement.setAttribute("data-theme", "dark");
-      localStorage.setItem("theme", "dark");
-    } else {
-      document.documentElement.setAttribute("data-theme", "light");
+  const switchTheme = () => {
+    const currentTheme = localStorage.getItem("theme");
+
+    if (currentTheme === "dark") {
       localStorage.setItem("theme", "light");
+      document.documentElement.setAttribute("data-theme", "light");
+      setTheme("light");
+    } else if (currentTheme === "light") {
+      localStorage.setItem("theme", "dark");
+      document.documentElement.setAttribute("data-theme", "dark");
+      setTheme("dark");
     }
   };
 
@@ -50,12 +59,12 @@ const Navbar: NextPage = () => {
         window.matchMedia("(prefers-color-scheme: dark)").matches)
     ) {
       document.documentElement.setAttribute("data-theme", "dark");
-      themeSwitch.current!.checked = true;
+      setTheme("dark");
     } else {
       document.documentElement.setAttribute("data-theme", "light");
-      themeSwitch.current!.checked = false;
+      setTheme("light");
     }
-  }, [themeSwitch]);
+  }, []);
 
   return (
     <header>
@@ -100,24 +109,40 @@ const Navbar: NextPage = () => {
             {!validateToken() ? (
               <Button onClick={() => router.push("/auth/login")}>Login</Button>
             ) : (
-              <Button onClick={() => router.push("/dashboard/")}>
-                Dashboard
-              </Button>
+              <div className="text-secondary dark:text-secondary-dark text-sm lg:text-base">
+                <Dropdown label={name} size="sm" inline={true}>
+                  <Dropdown.Item onClick={() => router.push("/dashboard/")}>
+                    Dashboard
+                  </Dropdown.Item>
+                  <Dropdown.Item
+                    onClick={() => router.push("/dashboard/settings")}
+                  >
+                    Settings
+                  </Dropdown.Item>
+                  <Dropdown.Divider />
+                  <Dropdown.Item
+                    onClick={() => {
+                      Cookies.remove("refreshToken");
+                      router.reload();
+                    }}
+                  >
+                    Sign out
+                  </Dropdown.Item>
+                </Dropdown>
+              </div>
             )}
 
-            <div className="py-2 flex items-center before:content-['Light'] before:mr-[10px] before:text-secondary before:dark:text-secondary-dark before:text-md after:content-['Dark'] after:ml-[10px] after:text-secondary after:dark:text-secondary-dark after:text-md">
-              <label className="relative inline-block w-[60px] h-[34px]">
-                <input
-                  type="checkbox"
-                  className="theme-switch hidden"
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    switchTheme(e)
-                  }
-                  ref={themeSwitch}
-                />
-                <span className="slider absolute cursor-pointer top-0 right-0 bottom-0 left-0 bg-[#ccc] rounded-[34px] transition ease-in-out duration-400 before:content-[''] before:absolute before:h-[26px] before:w-[26px] before:left-1 before:bottom-1 before:bg-white before:transition before:ease-in-out before:duration-400 before:rounded-full"></span>
-              </label>
-            </div>
+            <button
+              className="rounded-lg p-2 text-sm text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:bg-gray-700"
+              type="button"
+              onClick={switchTheme}
+            >
+              {theme === "dark" ? (
+                <MdWbSunny className="w-5 h-5" />
+              ) : (
+                <MdOutlineBedtime className="w-5 h-5" />
+              )}
+            </button>
           </div>
         </div>
       </nav>

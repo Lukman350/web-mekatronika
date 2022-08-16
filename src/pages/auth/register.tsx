@@ -1,44 +1,69 @@
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
+import { useEffect, useState } from "react";
 import callAPI from "@/lib/Api";
-import { Button, Label, TextInput } from "flowbite-react";
+import { Button, Label, TextInput, Spinner } from "flowbite-react";
 import { toast } from "react-toastify";
 import Head from "next/head";
 import Link from "next/link";
+import validateToken from "@/utils/validateToken";
 
 type FormData = {
   username: string;
   email: string;
   nis: number;
-  password: string;
-  confirmPassword: string;
 };
 
 const Register = () => {
+  const [loading, setLoading] = useState<boolean>(false);
+
   const router = useRouter();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-    watch,
   } = useForm<FormData>();
 
   const onSubmit = async (data: unknown) => {
+    setLoading(true);
+
     const response = await callAPI({
       method: "POST",
       url: `${process.env.NEXT_PUBLIC_API_URL as string}/auth/register`,
       data,
     });
 
-    if (!response.success) return toast.error(response.message);
+    if (!response.success) {
+      toast.error(response.message);
+      setLoading(false);
+      return;
+    }
 
     toast.success(response.message);
 
     setTimeout(() => {
       router.push("/auth/login");
-    }, 3000);
+    }, 1000);
   };
+
+  useEffect(() => {
+    if (
+      localStorage.getItem("theme") === "dark" ||
+      (!("theme" in localStorage) &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches)
+    ) {
+      document.documentElement.setAttribute("data-theme", "dark");
+    } else {
+      document.documentElement.setAttribute("data-theme", "light");
+    }
+  }, []);
+
+  useEffect(() => {
+    if (validateToken()) {
+      router.push("/");
+    }
+  }, [router]);
 
   return (
     <>
@@ -55,7 +80,7 @@ const Register = () => {
               <form
                 method="POST"
                 onSubmit={handleSubmit(onSubmit)}
-                className="flex flex-col w-full gap-4"
+                className="flex flex-col w-full gap-4 mt-2"
               >
                 <div className="flex flex-col justify-start w-full">
                   <div className="mb-2 block">
@@ -122,55 +147,20 @@ const Register = () => {
                     </p>
                   )}
                 </div>
-                <div className="flex flex-col justify-start w-full">
-                  <div className="mb-2 block">
-                    <Label htmlFor="password" value="Password" />
-                  </div>
-                  <TextInput
-                    {...register("password", {
-                      required: true,
-                    })}
-                    sizing="md"
-                    type="password"
-                    id="password"
-                    placeholder="Masukkan password kamu disini ..."
-                  />
-                  {errors.password && (
-                    <p className="text-red-500 text-xs italic mt-2">
-                      {errors.password.type === "required" &&
-                        "* Password harus diisi"}
-                    </p>
-                  )}
-                </div>
-                <div className="flex flex-col justify-start w-full">
-                  <div className="mb-2 block">
-                    <Label
-                      htmlFor="confirmPassword"
-                      value="Konfirmasi Password"
-                    />
-                  </div>
-                  <TextInput
-                    {...register("confirmPassword", {
-                      required: true,
-                      validate: (value) =>
-                        value === watch("password") || "* Password tidak sama",
-                    })}
-                    sizing="md"
-                    type="password"
-                    id="confirmPassword"
-                    placeholder="Konfirmasi password kamu disini ..."
-                  />
-                  {errors.confirmPassword && (
-                    <p className="text-red-500 text-xs italic mt-2">
-                      {errors.confirmPassword.type === "required"
-                        ? "* Password harus diisi"
-                        : "* Password tidak sama"}
-                    </p>
-                  )}
-                </div>
                 <div className="flex flex-col items-center w-full gap-2">
-                  <Button type="submit" style={{ width: "100%" }}>
-                    Register
+                  <Button
+                    type="submit"
+                    style={{ width: "100%" }}
+                    disabled={loading}
+                  >
+                    {loading ? (
+                      <>
+                        <Spinner size="sm" light={true} />
+                        <span className="pl-3">Loading ...</span>
+                      </>
+                    ) : (
+                      "Register"
+                    )}
                   </Button>
                   <Button
                     color="light"

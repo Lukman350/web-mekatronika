@@ -74,7 +74,7 @@ export default async function handler(
     },
     process.env.JWT_SECRET as string,
     {
-      expiresIn: "1m",
+      expiresIn: "1h",
     }
   );
 

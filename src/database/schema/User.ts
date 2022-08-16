@@ -7,6 +7,8 @@ interface IUser {
   nis: number;
   password: string;
   role: string;
+  verifyCode: string;
+  verified: boolean;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -38,6 +40,14 @@ const UserSchema = new Schema<IUser>(
     role: {
       type: String,
       default: "user",
+    },
+    verifyCode: {
+      type: String,
+      default: "",
+    },
+    verified: {
+      type: Boolean,
+      default: false,
     },
     createdAt: {
       type: Date,

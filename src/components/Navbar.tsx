@@ -1,7 +1,10 @@
 import type { NextPage } from "next";
 import { useRef, useEffect } from "react";
+import { useRouter } from "next/router";
 import NavLink from "@/components/NavLink";
 import Link from "next/link";
+import validateToken from "@/utils/validateToken";
+import { Button } from "flowbite-react";
 
 const NavigationList: Array<{
   title: string;
@@ -15,6 +18,7 @@ const Navbar: NextPage = () => {
   const navigation = useRef<HTMLDivElement>(null);
   const header = useRef<HTMLDivElement>(null);
   const themeSwitch = useRef<HTMLInputElement>(null);
+  const router = useRouter();
 
   const toggleNavigation = () => navigation.current?.classList.toggle("active");
 
@@ -93,9 +97,13 @@ const Navbar: NextPage = () => {
             ))}
           </div>
           <div className="mt-7 border-t border-[rgba(0,0,0,.1)] md:mt-0 lg:mt-0 md:border-0 lg:border-0 flex gap-4 flex-row items-center my-2">
-            <Link href="/auth/login">
-              <a className="btn-primary w-max md:mt-0 lg:mt-0">Login</a>
-            </Link>
+            {!validateToken() ? (
+              <Button onClick={() => router.push("/auth/login")}>Login</Button>
+            ) : (
+              <Button onClick={() => router.push("/dashboard/")}>
+                Dashboard
+              </Button>
+            )}
 
             <div className="py-2 flex items-center before:content-['Light'] before:mr-[10px] before:text-secondary before:dark:text-secondary-dark before:text-md after:content-['Dark'] after:ml-[10px] after:text-secondary after:dark:text-secondary-dark after:text-md">
               <label className="relative inline-block w-[60px] h-[34px]">

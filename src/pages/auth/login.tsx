@@ -5,6 +5,8 @@ import Cookies from "js-cookie";
 import { toast } from "react-toastify";
 import Head from "next/head";
 import Link from "next/link";
+import { useState } from "react";
+import { Spinner, Button, Label, TextInput } from "flowbite-react";
 
 type FormData = {
   nis: number;
@@ -20,7 +22,11 @@ const Login = () => {
     formState: { errors },
   } = useForm<FormData>();
 
+  const [loading, setLoading] = useState<boolean>(false);
+
   const onSubmit = async (data: unknown) => {
+    setLoading(true);
+
     const { nis, password } = data as { nis: number; password: string };
 
     const response = await callAPI({
@@ -42,12 +48,15 @@ const Login = () => {
       router.push("/");
     } else {
       toast.error(response.message);
+      setLoading(false);
     }
   };
 
   return (
     <>
       <Head>
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         <title>Teknik Mekatronika - Login Page</title>
       </Head>
       <div className="container min-h-screen w-full flex items-center justify-center">
@@ -57,22 +66,24 @@ const Login = () => {
               <h1 className="text-center dark:text-secondary-dark text-2xl font-bold">
                 Login
               </h1>
-              <form method="POST" onSubmit={handleSubmit(onSubmit)}>
-                <div className="flex flex-col justify-start w-full mt-2">
-                  <label htmlFor="nis" className="font-semibold py-2">
-                    <span className="text-gray-700 dark:text-secondary-dark">
-                      NIS
-                    </span>
-                  </label>
-                  <input
+              <form
+                method="POST"
+                onSubmit={handleSubmit(onSubmit)}
+                className="flex flex-col w-full gap-4"
+              >
+                <div className="flex flex-col justify-start w-full">
+                  <div className="mb-2 block">
+                    <Label htmlFor="nis" value="NIS" />
+                  </div>
+                  <TextInput
                     {...register("nis", {
                       required: true,
                       maxLength: 7,
                       minLength: 7,
                     })}
-                    className="form-input-primary"
                     type="number"
                     id="nis"
+                    sizing="md"
                     placeholder="Masukkan NIS kamu disini ..."
                   />
                   {errors.nis && (
@@ -83,19 +94,17 @@ const Login = () => {
                     </p>
                   )}
                 </div>
-                <div className="flex flex-col justify-start w-full mt-2">
-                  <label htmlFor="password" className="font-semibold py-2">
-                    <span className="text-gray-700 dark:text-secondary-dark">
-                      Password
-                    </span>
-                  </label>
-                  <input
+                <div className="flex flex-col justify-start w-full">
+                  <div className="mb-2 block">
+                    <Label htmlFor="password" value="Password" />
+                  </div>
+                  <TextInput
                     {...register("password", {
                       required: true,
                     })}
-                    className="form-input-primary"
                     type="password"
                     id="password"
+                    sizing="md"
                     placeholder="Masukkan password kamu disini ..."
                   />
                   {errors.password && (
@@ -105,18 +114,28 @@ const Login = () => {
                     </p>
                   )}
                 </div>
-                <div className="flex flex-col items-center w-full mt-4 gap-2">
-                  <button
-                    className="btn-primary w-full dark:btn-secondary"
+                <div className="flex flex-col items-center w-full gap-2">
+                  <Button
                     type="submit"
+                    disabled={loading}
+                    style={{ width: "100%" }}
                   >
-                    Login
-                  </button>
-                  <Link href="/">
-                    <a className="btn-secondary w-full text-center dark:btn-primary">
-                      Back to Home
-                    </a>
-                  </Link>
+                    {loading ? (
+                      <div className="mr-3">
+                        <Spinner size="sm" light={true} />
+                        Loading ...
+                      </div>
+                    ) : (
+                      "Login"
+                    )}
+                  </Button>
+                  <Button
+                    color="light"
+                    style={{ width: "100%" }}
+                    onClick={() => router.push("/")}
+                  >
+                    Back to Home
+                  </Button>
                 </div>
               </form>
               <Link href="/auth/register">

@@ -54,6 +54,7 @@ export default async function handler(
     email: email,
     nis: nis,
     password: hashPassword,
+    role: "User",
     createdAt: new Date().getTime(),
     updatedAt: new Date().getTime(),
   });

@@ -6,6 +6,8 @@ module.exports = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx}",
     "./src/components/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/flowbite/**/*.js",
+    "./node_modules/flowbite-react/**/*.js",
   ],
   theme: {
     extend: {
@@ -26,5 +28,5 @@ module.exports = {
       sans: ["'Nunito'", ...defaultTheme.fontFamily.sans],
     },
   },
-  plugins: [],
+  plugins: [require("flowbite/plugin")],
 };

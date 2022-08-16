@@ -2,63 +2,62 @@ import type { NextPage } from "next";
 import Layout from "@/components/Layout";
 import Image from "next/image";
 import Cookies from "js-cookie";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import jwt from "jsonwebtoken";
-
-interface UserTypes {
-  name: string;
-  nis: number;
-  username: string;
-  password: string;
-  email: string;
-}
+import validateToken from "@/utils/validateToken";
+import { useSelector, useDispatch } from "react-redux";
+import { setUser } from "@/features/user/userSlice";
+import { Carousel } from "flowbite-react";
 
 const Home: NextPage = () => {
-  const [user, setUser] = useState<UserTypes>({
-    name: "",
-    nis: 0,
-    username: "",
-    password: "",
-    email: "",
-  });
+  const dispatch = useDispatch();
 
-  // const checkUsername = () => {
-  //   if (user && user.username === "Unknown") {
-  //     router.push("/dashboard/profile");
-  //   }
-  // };
+  const { name } = useSelector((state: any) => state.user);
 
   useEffect(() => {
     if (Cookies.get("refreshToken")) {
       const token = Cookies.get("refreshToken");
       const decoded = jwt.decode(token!);
       if (decoded) {
-        setUser(decoded as UserTypes);
+        dispatch(setUser(decoded));
       }
     }
-  }, []);
+  }, [dispatch]);
 
-  // useEffect(() => {
-  //   checkUsername();
-  // });
+  useEffect(() => {
+    if (!validateToken()) {
+      Cookies.remove("refreshToken");
+      dispatch(
+        setUser({
+          name: "",
+          nis: 0,
+          username: "",
+          password: "",
+          email: "",
+          role: "",
+        })
+      );
+    }
+  }, [dispatch]);
   return (
     <Layout title="Teknik Mekatronika - SMKN 69 Jakarta">
-      <div className="container mx-auto flex items-center relative min-h-[1000px]">
-        <div className="w-6/12">
-          <h1 className="text-4xl font-bold text-primary">Home Page</h1>
-          <p className="text-xl">
-            Hello - <strong>{user.name !== "" && user.name}</strong>
-          </p>
-        </div>
-        <div className="w-6/12">
-          <Image
-            src="/vercel.svg"
-            width="100"
-            height="100"
-            quality={100}
-            alt="Testing"
-          />
-        </div>
+      <div className="h-64 lg:h-[500px]">
+        <Carousel>
+          <div className="flex h-full items-center justify-center bg-[url('/Banner/1.jpg')] bg-center bg-no-repeat bg-cover rounded-none text-white flex-col">
+            <h1 className="text-3xl lg:text-5xl font-black">
+              Selamat Datang di
+            </h1>
+            <h3 className="text-xl lg:text-2xl font-medium">
+              Website Teknik Mekatronika
+            </h3>
+          </div>
+          <div className="flex h-full items-center justify-center bg-[url('/Banner/2.jpg')] bg-center bg-no-repeat bg-cover rounded-none text-white">
+            Slide 2
+          </div>
+          <div className="flex h-full items-center justify-center bg-[url('/Banner/3.jpg')] bg-center bg-no-repeat bg-cover rounded-none text-white">
+            Slide 3
+          </div>
+        </Carousel>
       </div>
     </Layout>
   );

@@ -33,7 +33,7 @@ export default async function handler(
   if (!user) {
     res.status(404).json({
       success: false,
-      message: "User not found",
+      message: "User tidak ditemukan",
     });
 
     await db.disconnect();
@@ -45,7 +45,17 @@ export default async function handler(
   if (!isMatch) {
     res.status(403).json({
       success: false,
-      message: "Wrong password",
+      message: "Password yang Anda masukkan salah",
+    });
+
+    await db.disconnect();
+    return;
+  }
+
+  if (!user.verified) {
+    res.status(403).json({
+      success: false,
+      message: "Akun Anda belum diverifikasi, silahkan cek email Anda",
     });
 
     await db.disconnect();
@@ -59,10 +69,12 @@ export default async function handler(
       username: user.username,
       email: user.email,
       nis: user.nis,
+      role: user.role,
+      verified: user.verified,
     },
     process.env.JWT_SECRET as string,
     {
-      expiresIn: "1h",
+      expiresIn: "1m",
     }
   );
 
@@ -70,7 +82,7 @@ export default async function handler(
 
   res.status(200).json({
     success: true,
-    message: "Login success",
+    message: "Berhasil login",
     data: {
       refreshToken: token,
     },

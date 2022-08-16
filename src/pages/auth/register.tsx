@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import callAPI from "@/lib/Api";
-import Cookies from "js-cookie";
+import { Button, Label, TextInput } from "flowbite-react";
 import { toast } from "react-toastify";
 import Head from "next/head";
 import Link from "next/link";
@@ -52,20 +52,22 @@ const Register = () => {
               <h1 className="text-center dark:text-secondary-dark text-2xl font-bold">
                 Register
               </h1>
-              <form method="POST" onSubmit={handleSubmit(onSubmit)}>
-                <div className="flex flex-col justify-start w-full mt-2">
-                  <label htmlFor="fullName" className="font-semibold py-2">
-                    <span className="text-gray-700 dark:text-secondary-dark">
-                      Username
-                    </span>
-                  </label>
-                  <input
+              <form
+                method="POST"
+                onSubmit={handleSubmit(onSubmit)}
+                className="flex flex-col w-full gap-4"
+              >
+                <div className="flex flex-col justify-start w-full">
+                  <div className="mb-2 block">
+                    <Label htmlFor="username" value="Username" />
+                  </div>
+                  <TextInput
                     {...register("username", {
                       required: true,
                     })}
-                    className="form-input-primary"
                     type="text"
                     id="username"
+                    sizing="md"
                     placeholder="Masukkan Username sesuka mu disini ..."
                   />
                   {errors.username && (
@@ -75,18 +77,16 @@ const Register = () => {
                     </p>
                   )}
                 </div>
-                <div className="flex flex-col justify-start w-full mt-2">
-                  <label htmlFor="fullName" className="font-semibold py-2">
-                    <span className="text-gray-700 dark:text-secondary-dark">
-                      Alamat Email
-                    </span>
-                  </label>
-                  <input
+                <div className="flex flex-col justify-start w-full">
+                  <div className="mb-2 block">
+                    <Label htmlFor="email" value="Alamat Email" />
+                  </div>
+                  <TextInput
                     {...register("email", {
                       required: true,
                       pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
                     })}
-                    className="form-input-primary"
+                    sizing="md"
                     type="email"
                     id="email"
                     placeholder="Masukkan Alamat Email kamu disini ..."
@@ -99,21 +99,19 @@ const Register = () => {
                     </p>
                   )}
                 </div>
-                <div className="flex flex-col justify-start w-full mt-2">
-                  <label htmlFor="nis" className="font-semibold py-2">
-                    <span className="text-gray-700 dark:text-secondary-dark">
-                      NIS
-                    </span>
-                  </label>
-                  <input
+                <div className="flex flex-col justify-start w-full">
+                  <div className="mb-2 block">
+                    <Label htmlFor="nis" value="NIS" />
+                  </div>
+                  <TextInput
                     {...register("nis", {
                       required: true,
                       maxLength: 7,
                       minLength: 7,
                     })}
-                    className="form-input-primary"
                     type="number"
                     id="nis"
+                    sizing="md"
                     placeholder="Masukkan NIS kamu disini ..."
                   />
                   {errors.nis && (
@@ -124,17 +122,15 @@ const Register = () => {
                     </p>
                   )}
                 </div>
-                <div className="flex flex-col justify-start w-full mt-2">
-                  <label htmlFor="password" className="font-semibold py-2">
-                    <span className="text-gray-700 dark:text-secondary-dark">
-                      Password
-                    </span>
-                  </label>
-                  <input
+                <div className="flex flex-col justify-start w-full">
+                  <div className="mb-2 block">
+                    <Label htmlFor="password" value="Password" />
+                  </div>
+                  <TextInput
                     {...register("password", {
                       required: true,
                     })}
-                    className="form-input-primary"
+                    sizing="md"
                     type="password"
                     id="password"
                     placeholder="Masukkan password kamu disini ..."
@@ -146,22 +142,20 @@ const Register = () => {
                     </p>
                   )}
                 </div>
-                <div className="flex flex-col justify-start w-full mt-2">
-                  <label
-                    htmlFor="confirmPassword"
-                    className="font-semibold py-2"
-                  >
-                    <span className="text-gray-700 dark:text-secondary-dark">
-                      Konfirmasi Password
-                    </span>
-                  </label>
-                  <input
+                <div className="flex flex-col justify-start w-full">
+                  <div className="mb-2 block">
+                    <Label
+                      htmlFor="confirmPassword"
+                      value="Konfirmasi Password"
+                    />
+                  </div>
+                  <TextInput
                     {...register("confirmPassword", {
                       required: true,
                       validate: (value) =>
                         value === watch("password") || "* Password tidak sama",
                     })}
-                    className="form-input-primary"
+                    sizing="md"
                     type="password"
                     id="confirmPassword"
                     placeholder="Konfirmasi password kamu disini ..."
@@ -174,18 +168,17 @@ const Register = () => {
                     </p>
                   )}
                 </div>
-                <div className="flex flex-col items-center w-full mt-4 gap-2">
-                  <button
-                    className="btn-primary w-full dark:btn-secondary"
-                    type="submit"
-                  >
+                <div className="flex flex-col items-center w-full gap-2">
+                  <Button type="submit" style={{ width: "100%" }}>
                     Register
-                  </button>
-                  <Link href="/">
-                    <a className="btn-secondary w-full text-center dark:btn-primary">
-                      Back to Home
-                    </a>
-                  </Link>
+                  </Button>
+                  <Button
+                    color="light"
+                    onClick={() => router.push("/")}
+                    style={{ width: "100%" }}
+                  >
+                    Back to Home
+                  </Button>
                 </div>
               </form>
               <Link href="/auth/login">

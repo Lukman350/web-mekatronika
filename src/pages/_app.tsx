@@ -1,12 +1,14 @@
-import "@/styles/app.min.css";
+import "@/styles/input.css";
 import type { AppProps } from "next/app";
+import { store } from "@/app/store";
+import { Provider } from "react-redux";
 
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, Slide } from "react-toastify";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <>
+    <Provider store={store}>
       <Component {...pageProps} />
       <ToastContainer
         position="top-right"
@@ -20,7 +22,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         pauseOnHover
         transition={Slide}
       />
-    </>
+    </Provider>
   );
 }
 

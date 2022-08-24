@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import callAPI from "@/lib/Api";
 import { Button, Label, TextInput, Spinner } from "flowbite-react";
 import { toast } from "react-toastify";
-import Head from "next/head";
+import Layout from "@/components/Layout";
 import validateToken from "@/utils/validateToken";
 
 type FormData = {
@@ -107,11 +107,7 @@ const Verify: NextPage = () => {
   }, [router]);
 
   return (
-    <>
-      <Head>
-        <title>Teknik Mekatronika - Verify Account</title>
-      </Head>
-
+    <Layout title="Teknik Mekatronika - Verify Account" navbarIsShow={false}>
       <div className="container min-h-screen w-full flex items-center justify-center">
         <div className="w-full max-w-sm md:max-w-md lg:max-w-md">
           <div className="background-gradient shadow-md rounded px-8 pt-6 pb-8 mb-4 border border-slate-300 dark:border dark:border-slate-700">
@@ -210,7 +206,7 @@ const Verify: NextPage = () => {
           </div>
         </div>
       </div>
-    </>
+    </Layout>
   );
 };
 

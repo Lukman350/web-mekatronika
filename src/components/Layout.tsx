@@ -1,21 +1,18 @@
-import Head from "next/head";
+import Header from "@/components/Header";
 import Navbar from "@/components/Navbar";
 
 interface LayoutProps {
   title: string;
   children: React.ReactNode;
+  navbarIsShow?: boolean;
 }
 
-const Layout = ({ title, children }: LayoutProps) => {
+const Layout = ({ title, children, navbarIsShow }: LayoutProps) => {
   return (
     <>
-      <Head>
-        <meta charSet="utf-8" />
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-        <title>{title}</title>
-      </Head>
+      <Header title={title} />
 
-      <Navbar />
+      {navbarIsShow && <Navbar />}
 
       <main className="z-10">{children}</main>
     </>

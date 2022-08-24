@@ -39,8 +39,9 @@ const Home: NextPage = () => {
       );
     }
   }, [dispatch]);
+
   return (
-    <Layout title="Teknik Mekatronika - SMKN 69 Jakarta">
+    <Layout title="Teknik Mekatronika - SMKN 69 Jakarta" navbarIsShow={true}>
       <div className="h-64 lg:h-[500px]">
         <Carousel slideInterval={5000}>
           <div className="flex h-full items-center justify-center bg-[url('/Banner/1.jpg')] bg-center bg-no-repeat bg-cover rounded-none text-white flex-col">

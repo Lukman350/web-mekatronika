@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import callAPI from "@/lib/Api";
 import Cookies from "js-cookie";
 import { toast } from "react-toastify";
-import Head from "next/head";
+import Layout from "@/components/Layout";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { Spinner, Button, Label, TextInput } from "flowbite-react";
@@ -78,12 +78,7 @@ const Login = () => {
   }, [router]);
 
   return (
-    <>
-      <Head>
-        <meta charSet="utf-8" />
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-        <title>Teknik Mekatronika - Login Page</title>
-      </Head>
+    <Layout title="Teknik Mekatronika - Login Page" navbarIsShow={false}>
       <div className="container min-h-screen w-full flex items-center justify-center">
         <div className="w-full max-w-sm md:max-w-md lg:max-w-md">
           <div className="background-gradient shadow-md rounded px-8 pt-6 pb-8 mb-4 border border-slate-300 dark:border dark:border-slate-700">
@@ -172,7 +167,7 @@ const Login = () => {
           </div>
         </div>
       </div>
-    </>
+    </Layout>
   );
 };
 

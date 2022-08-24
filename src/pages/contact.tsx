@@ -4,14 +4,14 @@ import Image from "next/image";
 
 const About: NextPage = () => {
   return (
-    <Layout title="Contact Page">
+    <Layout title="Contact Page" navbarIsShow={true}>
       <div className="container mx-auto flex items-center relative min-h-[1000px]">
         <div className="w-6/12">
           <h1 className="text-4xl font-bold text-primary">Contact Page</h1>
         </div>
         <div className="w-6/12">
           <Image
-            src="/vercel.svg"
+            src="/logo.jpg"
             width={100}
             height={100}
             quality={100}

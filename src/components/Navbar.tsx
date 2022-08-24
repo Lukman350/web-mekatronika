@@ -8,6 +8,7 @@ import { Button, Dropdown } from "flowbite-react";
 import { useSelector } from "react-redux";
 import Cookies from "js-cookie";
 import { MdWbSunny, MdOutlineBedtime } from "react-icons/md";
+import { GiHamburgerMenu } from "react-icons/gi";
 
 const NavigationList: Array<{
   title: string;
@@ -33,7 +34,7 @@ const Navbar: NextPage = () => {
   };
 
   const switchTheme = () => {
-    const currentTheme = localStorage.getItem("theme");
+    const currentTheme = document.documentElement.getAttribute("data-theme");
 
     if (currentTheme === "dark") {
       localStorage.setItem("theme", "light");
@@ -69,7 +70,7 @@ const Navbar: NextPage = () => {
   return (
     <header>
       <nav
-        className="container flex items-center justify-between flex-wrap p-4 transition-all ease-in-out duration-300 relative bg-none dark:bg-none dark:bg-body-bg-dark dark:lg:bg-none dark:lg:bg-transparent lg:bg-none"
+        className="container flex items-center justify-between flex-wrap p-4 transition-all ease-in-out duration-300 relative bg-none dark:bg-none dark:bg-body-bg-dark dark:lg:bg-none lg:bg-none"
         ref={header}
       >
         <div className="flex items-center flex-shrink-0 text-primary mr-6 lg:mr-12">
@@ -82,18 +83,15 @@ const Navbar: NextPage = () => {
         </div>
         <div className="block lg:hidden">
           <button
-            className="flex items-center px-3 py-2 border rounded text-primary border-primary hover:text-primary hover:border-primary"
+            className="flex items-center rounded text-primary hover:text-primary hover:border-primary"
             onClick={toggleNavigation}
             type="button"
           >
-            <svg className="fill-current h-3 w-3" viewBox="0 0 20 20">
-              <title>Menu</title>
-              <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
-            </svg>
+            <GiHamburgerMenu size={30} />
           </button>
         </div>
         <div
-          className="navbar-nav w-full block flex-grow absolute top-[68px] right-0 left-0 px-4 transition-transform ease-in-out duration-300 overflow-hidden h-max z-50 lg:flex lg:items-center lg:w-auto lg:static lg:px-0 bg-gradient-to-b from-body-bg-light dark:bg-none dark:bg-body-bg-dark dark:lg:bg-none dark:lg:bg-transparent lg:bg-none lg:bg-transparent border-b border-[rgba(0,0,0,0.1)] lg:border-0 transform -translate-x-full md:transform-none lg:transform-none"
+          className="navbar-nav w-full block flex-grow absolute top-[68px] right-0 left-0 px-4 transition-transform ease-in-out duration-300 overflow-hidden h-max z-50 lg:flex lg:items-center lg:w-auto lg:static lg:px-0 bg-gradient-to-t from-body-bg-light via-indigo-200 to-indigo-300 dark:bg-none dark:bg-body-bg-dark dark:lg:bg-none dark:lg:bg-transparent lg:bg-none lg:bg-transparent border-b border-[rgba(0,0,0,0.1)] lg:border-0 transform -translate-x-full md:transform-none lg:transform-none"
           ref={navigation}
         >
           <div className="text-md lg:flex-grow">

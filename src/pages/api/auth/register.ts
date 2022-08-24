@@ -60,7 +60,6 @@ export default async function handler(
     username: username,
     email: email,
     nis: nis,
-    role: "User",
     verified: false,
     verifyCode: generateVerifyCode(),
     createdAt: new Date().getTime(),

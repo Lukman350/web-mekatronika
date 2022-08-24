@@ -70,7 +70,7 @@ const Navbar: NextPage = () => {
   return (
     <header>
       <nav
-        className="container flex items-center justify-between flex-wrap p-4 transition-all ease-in-out duration-300 relative bg-none dark:bg-none dark:bg-body-bg-dark dark:lg:bg-none lg:bg-none"
+        className="container flex items-center justify-between flex-wrap p-4 transition-all ease-in-out duration-300 relative bg-none dark:bg-none dark:lg:bg-none lg:bg-none"
         ref={header}
       >
         <div className="flex items-center flex-shrink-0 text-primary mr-6 lg:mr-12">

@@ -40,22 +40,22 @@ export default async function handler(
     return;
   }
 
-  const isMatch = await bcrypt.compare(password, user.password);
-
-  if (!isMatch) {
+  if (!user.verified) {
     res.status(403).json({
       success: false,
-      message: "Password yang Anda masukkan salah",
+      message: "Akun Anda belum diverifikasi, silahkan cek email Anda",
     });
 
     await db.disconnect();
     return;
   }
 
-  if (!user.verified) {
+  const isMatch = await bcrypt.compare(password, user.password);
+
+  if (!isMatch) {
     res.status(403).json({
       success: false,
-      message: "Akun Anda belum diverifikasi, silahkan cek email Anda",
+      message: "Password yang Anda masukkan salah",
     });
 
     await db.disconnect();

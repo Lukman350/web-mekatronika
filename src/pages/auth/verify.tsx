@@ -113,7 +113,7 @@ const Verify: NextPage = () => {
           <div className="background-gradient shadow-md rounded px-8 pt-6 pb-8 mb-4 border border-slate-300 dark:border dark:border-slate-700">
             <div className="p-2">
               <h1 className="text-center dark:text-secondary-dark text-2xl font-bold">
-                Buat Akun Password
+                Buat Password Akunmu
               </h1>
 
               <form
@@ -208,6 +208,30 @@ const Verify: NextPage = () => {
       </div>
     </Layout>
   );
+};
+
+interface IServerSideProps {
+  query: {
+    usrid: string;
+    c: string;
+  };
+}
+
+export const getServerSideProps = async (context: IServerSideProps) => {
+  const { usrid, c } = context.query;
+
+  if (!usrid || !c) {
+    return {
+      redirect: {
+        destination: "/auth/login",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
 };
 
 export default Verify;

@@ -17,7 +17,7 @@
 }
 
 .sticky .navbar-nav {
-  @apply bg-none bg-indigo-100 lg:bg-transparent;
+  @apply bg-none bg-indigo-100 lg:bg-transparent dark:bg-slate-700;
 }
 
 .link-active {

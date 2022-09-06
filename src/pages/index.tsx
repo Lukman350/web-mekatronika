@@ -8,6 +8,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setUser } from "@/features/user/userSlice";
 import { Carousel } from "flowbite-react";
 import Image from "next/image";
+import MyFooter from "@/components/Footer";
 
 const Home: NextPage = () => {
   const dispatch = useDispatch();
@@ -42,14 +43,14 @@ const Home: NextPage = () => {
   }, [dispatch]);
 
   return (
-    <Layout title="Teknik Mekatronika - SMKN 69 Jakarta" navbarIsShow={true}>
-      <div className="w-full h-64 lg:h-[500px]">
+    <Layout title="Teknik Mekatronika - SMKN 69" navbarIsShow={true}>
+      <div className="w-full h-64 lg:h-[90vh]">
         <Carousel slideInterval={5000}>
           <div className="flex h-full items-center justify-center text-white relative">
             <Image
               src="/Banner/1.jpg"
               layout="fill"
-              loading="eager"
+              loading="lazy"
               quality={100}
               className="w-full h-full object-cover rounded-none"
             />
@@ -118,6 +119,8 @@ const Home: NextPage = () => {
           </div>
         </div>
       </section>
+
+      <MyFooter />
     </Layout>
   );
 };

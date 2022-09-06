@@ -91,7 +91,7 @@ const Navbar: NextPage = () => {
           </button>
         </div>
         <div
-          className="navbar-nav w-full block flex-grow absolute top-[68px] right-0 left-0 px-4 transition-transform ease-in-out duration-300 overflow-hidden h-max z-50 lg:flex lg:items-center lg:w-auto lg:static lg:px-0 bg-gradient-to-t from-body-bg-light via-indigo-200 to-indigo-300 dark:bg-none dark:bg-body-bg-dark dark:lg:bg-none dark:lg:bg-transparent lg:bg-none lg:bg-transparent border-b border-[rgba(0,0,0,0.1)] lg:border-0 transform -translate-x-full md:transform-none lg:transform-none"
+          className="navbar-nav w-full block flex-grow absolute top-[68px] right-0 left-0 px-4 transition-transform ease-in-out duration-300 overflow-hidden h-max z-50 md:flex lg:flex lg:items-center lg:w-auto lg:static lg:px-0 bg-gradient-to-t from-body-bg-light via-indigo-200 to-indigo-300 dark:bg-none dark:bg-body-bg-dark dark:lg:bg-none dark:lg:bg-transparent lg:bg-none lg:bg-transparent border-b border-[rgba(0,0,0,0.1)] lg:border-0 transform -translate-x-full md:transform-none lg:transform-none"
           ref={navigation}
         >
           <div className="text-md lg:flex-grow">

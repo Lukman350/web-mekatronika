@@ -1,19 +1,18 @@
 import { Footer } from "flowbite-react";
 import { BsInstagram } from "react-icons/bs";
 import Link from "next/link";
+import Image from "next/image";
 
 const MyFooter = () => {
   return (
     <Footer container={true}>
       <div className="w-full">
         <div className="grid w-full justify-between sm:flex sm:justify-between md:flex md:grid-cols-1">
-          <div className="md:mr-14">
-            <Footer.Brand
-              href="/"
-              src="/logo.jpg"
-              alt="Mekatronika Logo"
-              name="Mekatronika"
-            />
+          <div className="md:mr-20">
+            <Image src="/logo69.png" height={306} width={306} />
+            <h1 className="text-2xl font-bold text-center text-secondary dark:text-secondary-dark">
+              SMKN 69 Jakarta
+            </h1>
           </div>
           <div className="grid grid-cols-2 gap-8 sm:mt-4 sm:grid-cols-3 sm:gap-6">
             <div>
@@ -41,10 +40,14 @@ const MyFooter = () => {
               </Footer.LinkGroup>
             </div>
             <div>
-              <Footer.Title title="Legal" />
+              <Footer.Title title="Contact" />
               <Footer.LinkGroup col={true}>
-                <Footer.Link href="#">Privacy Policy</Footer.Link>
-                <Footer.Link href="#">Terms & Conditions</Footer.Link>
+                <p className="font-light text-secondary dark:text-secondary-dark">
+                  test@mekasmkn69.my.id
+                </p>
+                <p className="font-light text-secondary dark:text-secondary-dark">
+                  +62 812-3456-7890
+                </p>
               </Footer.LinkGroup>
             </div>
           </div>
@@ -53,10 +56,12 @@ const MyFooter = () => {
         <div className="w-full sm:flex sm:items-center sm:justify-between">
           <Footer.Copyright href="/" by="Teknik Mekatronika" year={2022} />
           <div className="mt-4 flex space-x-6 sm:mt-0 sm:justify-center">
-            <Footer.Icon href="#" icon={BsInstagram} />
-            <Footer.Icon href="#" icon={BsInstagram} />
-            <Footer.Icon href="#" icon={BsInstagram} />
-            <Footer.Icon href="#" icon={BsInstagram} />
+            <Footer.Icon
+              href="https://instagram.com/mechatronic_engine"
+              target="_blank"
+              rel="noopener noreferrer"
+              icon={BsInstagram}
+            />
           </div>
         </div>
       </div>
